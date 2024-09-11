@@ -15,7 +15,7 @@ void loop()
 {
   float temp = sht31.readTemp();
   float humid = sht31.readHumid();
-  Serial.print("Suhu: "); Serial.print(temp); 
-  Serial.print(" Kelembapan: ") ; Serial.println(humid);
+  Serial.print("Suhu: "); Serial.print(temp); Serial.print(" °C || ");
+  Serial.print(" Kelembapan: ") ; Serial.print(humid); Serial.println(" RH");
   delay(200);
 }

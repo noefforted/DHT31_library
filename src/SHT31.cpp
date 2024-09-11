@@ -28,6 +28,7 @@ bool SHT31::readSensor()
 {
     if (!writeCommand(0x2400))
     {
+        Serial.println("Command tidak terkirim");
         return false;
     }
     delay(15);
@@ -36,28 +37,31 @@ bool SHT31::readSensor()
 
     if (Wire.available() != 6)
     {
+        Serial.println("Wire tidak available");
         return false;
     }
 
     uint8_t tempData[2];
-    tempData[0] = Wire.read(); //temp MSB
-    tempData[1] = Wire.read(); //temp LSB
+    tempData[0] = Wire.read(); // temp MSB
+    tempData[1] = Wire.read(); // temp LSB
     uint8_t tempCrc = Wire.read();
 
     if (checkSum(tempData, 2) != tempCrc)
     {
+        Serial.println("Checksum temp error");
         return false;
     }
 
     rawTemp = (tempData[0] << 8) | tempData[1];
 
     uint8_t humidData[2];
-    humidData[0] = Wire.read(); //humid MSB
-    humidData[1] = Wire.read(); //humid LSB
+    humidData[0] = Wire.read(); // humid MSB
+    humidData[1] = Wire.read(); // humid LSB
     uint8_t humidCrc = Wire.read();
 
     if (checkSum(humidData, 2) != humidCrc)
     {
+        Serial.println("Checksum humid error");
         return false;
     }
 
